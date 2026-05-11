@@ -23,8 +23,8 @@ For each task within the scoped phase(s):
 
 1. **Implement.** Make the changes the plan describes. Plans express intent, not patches — adapt to the codebase as it exists. Reference files by path, not line numbers.
 2. **Verify.** Run the project's build, lint, type-check, and test commands. All must pass before committing. If any fail, fix before proceeding. Verification hierarchy: type system > lint > unit tests > integration tests. Fix at the highest level that catches the issue.
-3. **Commit.** One self-contained commit per task. All verifications green. Follow the repository's existing commit conventions — check `git log --oneline -10` for patterns. If no convention is apparent, use: `feat: {domain message}` / `fix: {domain message}` / `refactor: {domain message}`. If a failing state is necessary, explain in the commit message.
-4. **Check off.** Mark acceptance criteria as done in the plan file (`[x]`). The plan file is the single source of truth for progress.
+3. **Check off.** Mark acceptance criteria as done in the plan file (`[x]`). The plan file is the single source of truth for progress.
+4. **Commit.** One self-contained commit per task, including plan file changes. All verifications green. Follow the repository's existing commit conventions — check `git log --oneline -10` for patterns. If no convention is apparent, use: `feat: {domain message}` / `fix: {domain message}` / `refactor: {domain message}`. If a failing state is necessary, explain in the commit message. **Skip committing when execution produces only one commit total** — the operator can review and commit. Commit when working through multiple tasks, as each commit checkpoints progress.
 
 ## Plan updates
 
@@ -37,7 +37,7 @@ For each task within the scoped phase(s):
 
 - **Decide and proceed.** If a reasonable assumption can be made from context, make it and note it in the plan's revision log. Do not block on ambiguity.
 - **Surface to operator.** Pause and ask if: a decision impacts modules outside the current phase's scope, execution contradicts the plan's stated requirements, or a planned task cannot be completed without expanding scope.
-- **Log tangents.** Do not expand scope. Record out-of-scope improvements in the agent logs file (`.agent/logs/{name}.md`) under **Backlog**, not the plan.
+- **Log tangents.** Do not expand scope. Record out-of-scope improvements in the agent logs file (`.agents/logs/{name}.md`) under **Backlog**, not the plan.
 
 ## Constraints
 

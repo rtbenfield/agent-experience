@@ -1,6 +1,6 @@
 # Global Rules
 
-Capture decisions and backlog items in the agent logs file (`.agent/logs/{name}.md`, where `{name}` is a brief identifier for the session — as concise as possible while remaining distinguishable). Structure it with **Decisions** (what was chosen and why) and **Backlog** (improvements, tangents, and unpursued ideas with enough context to act on later) sections.
+Capture decisions and backlog items in the agent logs file (`.agents/logs/{name}.md`, where `{name}` is a brief identifier for the session — as concise as possible while remaining distinguishable). Structure it with **Decisions** (what was chosen and why) and **Backlog** (improvements, tangents, and unpursued ideas with enough context to act on later) sections.
 
 ## Conversation
 
