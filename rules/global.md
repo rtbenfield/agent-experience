@@ -1,6 +1,6 @@
 # Global Rules
 
-Capture decisions and backlog items in the agent logs file (`.agents/logs/{name}.md`, where `{name}` is a brief identifier for the session — as concise as possible while remaining distinguishable). Structure it with **Decisions** (what was chosen and why) and **Backlog** (improvements, tangents, and unpursued ideas with enough context to act on later) sections.
+Write `.agents/logs/{name}.md` only for tangential observations — refactor opportunities, spotted bugs, unpursued ideas — not to document the active task. Omit the file when there's nothing to capture.
 
 ## Conversation
 
@@ -53,7 +53,11 @@ Refactor to eliminate the need for module mocking.
 ## Decision Making
 
 - Decide and proceed. If a decision impacts unrelated modules, propose to operator first.
-- Persist all decisions and rationale to the agent logs file for review after the task.
+- Log tangential decisions with rationale in the agent logs file.
+
+## Corrections
+
+When corrected, assess whether the mistake is systemic (would recur without a rule). If so, write a rule addressing the root cause — not the symptom — to the AGENTS.md whose scope matches (project root for cross-cutting, subdirectory for module-specific). Skip purely contextual corrections.
 
 ## Scope Discipline
 
