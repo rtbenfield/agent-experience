@@ -8,7 +8,8 @@ Each skill follows this structure:
 skill-name/
 ├── SKILL.md           # Main instructions (required)
 ├── REFERENCE.md       # Detailed docs (optional)
-├── EXAMPLES.md        # Usage examples (optional)
+├── assets/
+│   └── EXAMPLES.md    # Usage examples (optional)
 └── scripts/           # Utility scripts (optional)
 ```
 

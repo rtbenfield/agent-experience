@@ -1,6 +1,9 @@
 ---
 name: project-plan
-description: Create an implementation plan from a project spec. Use when user says "project plan", "plan the spec", "implementation plan", or wants to turn a spec into phased build steps.
+description: Use when user says "project plan", "plan the spec", "implementation plan", or wants to turn a spec into phased build steps.
+metadata:
+  author: Tyler Benfield
+  version: "2026.5.21"
 ---
 
 # Project Plan
@@ -45,7 +48,7 @@ Decisions needed during implementation. Each includes a recommended answer with 
 
 #### Phase 1…N
 
-Goal, requirements, changes, acceptance criteria (see [EXAMPLES.md](EXAMPLES.md)).
+Goal, requirements, changes, acceptance criteria (see [EXAMPLES.md](assets/EXAMPLES.md)).
 
 ### Review flags
 

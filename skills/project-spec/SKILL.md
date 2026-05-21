@@ -1,6 +1,9 @@
 ---
 name: project-spec
 description: Use when the operator provides an outcome-focused prompt, asks for a spec or specification, or says "project-spec" or "/project-spec".
+metadata:
+  author: Tyler Benfield
+  version: "2026.5.21"
 ---
 
 # Project Spec

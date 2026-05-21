@@ -1,6 +1,9 @@
 ---
 name: project-execute
-description: Execute an implementation plan produced by /project-plan. Use when user says "execute the plan", "implement the plan", "run the plan", "implement phase", "start implementation", "build phase", or wants to begin implementation from a plan file.
+description: Use when user says "execute the plan", "implement the plan", "run the plan", "implement phase", "start implementation", "build phase", or wants to begin implementation from a plan file.
+metadata:
+  author: Tyler Benfield
+  version: "2026.5.21"
 ---
 
 # Project Execute
