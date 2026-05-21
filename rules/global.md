@@ -76,3 +76,5 @@ When corrected, assess whether the mistake is systemic (would recur without a ru
 - Use Mermaid for diagrams and visualizations unless otherwise specified.
 - Never embed absolute paths in code, documentation, or PR descriptions.
 - Never persist plan artifacts (requirement IDs, ticket numbers, FR/NFR labels) into code. Comments and names reference the domain, not the planning tool.
+- Label list items or headings (e.g., **F1**, **F2**) when the operator may need to reference them — avoids re-describing.
+- Ephemeral labels are for conversation only — don't carry them into artifacts, and defer to existing reference schemes (e.g., FR1, NFR1) when present.

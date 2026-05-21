@@ -8,6 +8,5 @@
 
 # Ephemeral labels
 
-- When producing a list the operator may respond to item-by-item, label each item (e.g., **F1**, **F2** or **S1**, **S2**) so the operator can reference them by label instead of re-describing the item.
-- Ephemeral labels are a conversation affordance, not a persistent identifier. Do not carry them into artifacts that outlive the conversation.
-- If the artifact already has its own reference scheme (e.g., FR1, NFR1 in a spec), use that scheme instead. Ephemeral labels and persistent identifiers should not coexist in the same artifact.
+- Label list items or headings (e.g., **F1**, **F2**) when the operator may need to reference them — avoids re-describing.
+- Ephemeral labels are for conversation only — don't carry them into artifacts, and defer to existing reference schemes (e.g., FR1, NFR1) when present.
