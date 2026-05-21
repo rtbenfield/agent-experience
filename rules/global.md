@@ -1,6 +1,6 @@
 # Global Rules
 
-Write `.agents/logs/{name}.md` only for tangential observations — refactor opportunities, spotted bugs, unpursued ideas — not to document the active task. Omit the file when there's nothing to capture.
+Write `.agents/diary/{name}.md` only for tangential observations — refactor opportunities, spotted bugs, unpursued ideas — not to document the active task. Omit the file when there's nothing to capture.
 
 ## Conversation
 
@@ -66,6 +66,10 @@ When corrected, assess whether the mistake is systemic (would recur without a ru
 ## Git Hygiene
 
 - Commits: one self-contained task, all verifications green. If a failing state is necessary, explain in the commit message.
+
+## Attribution
+
+- Append `🤖 written by AI` to any PR comment or PR comment reply posted using the operator's personal account.
 
 ## Output
 
