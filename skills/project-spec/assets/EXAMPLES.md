@@ -94,6 +94,7 @@ End users experience high latency for static assets, especially in regions far f
 - For FR5, "static assets" means files with immutable URLs (content-hashed filenames, versioned paths). Query-string–parameterized URLs are assumed dynamic and bypass cache.
 - Single-region deployment for initial release. Multi-region PoPs are a future extension.
 - FR1's graceful degradation serves stale content on origin failure rather than returning errors.
+- Stale-while-revalidate serves stale content in the background while revalidating ⚠️ **RF1** (assumed stale-while-revalidate over block-until-fresh; verify this tradeoff is acceptable given FR3's 60-second propagation window).
 
 ## Out of scope
 
@@ -103,5 +104,6 @@ End users experience high latency for static assets, especially in regions far f
 
 ## Open questions
 
-> ⚠️ **REVIEW**: TTL for stale-while-revalidate — should cached content be served stale while revalidating in the background (preferred), or should it block until fresh? Serving stale in background keeps perceived latency low. Operator input needed because this affects both UX and origin load tradeoffs for FR3.
+- **Q1**: What invalidation protocol should the proxy expose for cache purging — REST API, webhook, or message queue?
+  - **Recommended**: REST API. Simplest to implement and debug, matches standard CDN purge APIs. A message queue adds operational complexity unwarranted for single-region deployment.
 ```

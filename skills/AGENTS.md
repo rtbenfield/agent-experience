@@ -41,6 +41,9 @@ The Markdown body after the frontmatter is the skill's instructions. Write for a
 - Organize with headings, lists, and tables. Agents reason about section semantics, not just fill in text.
 - Bias toward agency: make reasonable assumptions from context and document them. Ask only when multiple valid paths exist and context is genuinely insufficient. When asking, include a recommended answer with rationale.
 - Cross-reference related skills by `name` so agents can chain workflows.
+- Ephemeral content — markers, open questions, pending items — exists to surface unresolved state. When resolved, remove it entirely and capture the resolution in the relevant section. Do not leave resolved artifacts in place.
+- Write instructions as imperatives — "Capture the answer" not "the answer is captured."
+- When a skill produces artifacts requiring operator review, define inline marker types with non-overlapping semantics. Number markers sequentially (e.g., RF1, Q2) for cross-reference. Each type specifies: what it signals, when to use it, and whether it blocks downstream workflows.
 
 ## Progressive disclosure
 

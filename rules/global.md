@@ -69,12 +69,12 @@ When corrected, assess whether the mistake is systemic (would recur without a ru
 
 ## Attribution
 
-- Append `🤖 written by AI` to any PR comment or PR comment reply posted using the operator's personal account.
+- Append `🤖 written by AI` as a new line to any PR comment or PR comment reply posted using the operator's personal account.
 
 ## Output
 
 - Use Mermaid for diagrams and visualizations unless otherwise specified.
 - Never embed absolute paths in code, documentation, or PR descriptions.
 - Never persist plan artifacts (requirement IDs, ticket numbers, FR/NFR labels) into code. Comments and names reference the domain, not the planning tool.
-- Label list items or headings (e.g., **F1**, **F2**) when the operator may need to reference them — avoids re-describing.
+- Label list items and headings (e.g., **FR1**, **Q2**, **RF1**) — skip only for items that are self-contained, won't be revisited, and carry no decision weight. When in doubt, label.
 - Ephemeral labels are for conversation only — don't carry them into artifacts, and defer to existing reference schemes (e.g., FR1, NFR1) when present.

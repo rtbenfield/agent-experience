@@ -20,16 +20,18 @@
 - localStorage is the persistence layer (per spec — no backend changes).
 - `prefers-color-scheme` media query is the OS-integration mechanism.
 - Three-way toggle (light / dark / system) rather than simple on/off, since the spec requires OS-sync as default with explicit override.
+- High-contrast themes deferred to a later cycle ⚠️ **RF1** (assumed high-contrast is out of scope for this release; verify this doesn't conflict with accessibility requirements).
 
 ## Open Questions
 
-- Should the flash-of-wrong-theme prevention use an inline `<script>` in `<head>` or a CSS-only `:root` default? **Recommended**: inline script. It's the pattern used by next-themes and avoids the brief flash that a CSS default would cause while JS loads.
-- > ⚠️ **REVIEW**: Should we support high-contrast themes in this release or defer to a later cycle? No clear convention exists in the codebase, and scope depends on accessibility requirements the operator needs to define.
+- **Q1**: Should the flash-of-wrong-theme prevention use an inline `<script>` in `<head>` or a CSS-only `:root` default?
+  - **Recommended**: inline `<script>` in `<head>`. It's the pattern used by next-themes and avoids the brief flash that a CSS default would cause while JS loads.
 
 ## Phases
 
 ### Phase 1: Theme data model and persistence hook
 
+**Status**: ☐ Not started
 **Goal**: Establish the data model and persistence layer. Everything else depends on this.
 **Requirements**: FR3 (persistence), FR4 (OS sync)
 
@@ -44,6 +46,7 @@
 
 ### Phase 2: Global application and settings toggle
 
+**Status**: ☐ Not started
 **Goal**: Wire theme to the DOM and give users a control.
 **Requirements**: FR1 (toggle in settings), FR2 (global application)
 
@@ -58,13 +61,14 @@
 
 ### Phase 3: Flash prevention and accessibility audit
 
+**Status**: ☐ Not started
 **Goal**: Eliminate flash of wrong theme and ensure complete dark-mode coverage.
 **Requirements**: NFR1 (no flash), NFR2 (WCAG AA), NFR3 (all components covered)
 
 **Changes**:
 - `src/hooks/useTheme.ts` — add inline script injection to set `data-theme` before first paint.
 - Across component files — audit and replace hardcoded colors with theme tokens.
-- `src/tokens.css` — fill token gaps discovered during audit.
+- `src/tokens.css` — fill token gaps discovered during audit ⚠️ **RF2** (assumed manual audit is sufficient for initial release; a stylelint rule like `no-dark-undefined` could catch regressions but adds tooling scope).
 
 **Acceptance criteria**:
 - [ ] No visible flash of wrong theme on load (NFR1)
@@ -72,10 +76,6 @@
 - [ ] WCAG AA contrast ratios met across all components (NFR2)
 
 ---
-
-## Review flags
-
-- ⚠️ **Hardcoded color audit**: Requires manual pass over all components. Consider adding a stylelint rule (`no-dark-undefined` or similar) as a follow-up to catch regressions.
 
 ## Revision log
 ```

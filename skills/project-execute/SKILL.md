@@ -3,7 +3,7 @@ name: project-execute
 description: Use when user says "execute the plan", "implement the plan", "run the plan", "implement phase", "start implementation", "build phase", or wants to begin implementation from a plan file.
 metadata:
   author: Tyler Benfield
-  version: "2026.5.21"
+  version: "2026.5.28"
 ---
 
 # Project Execute
@@ -13,7 +13,7 @@ Execute an implementation plan produced by `/project-plan`. Works through phases
 ## Pre-conditions — halt if unmet
 
 1. **No plan referenced.** Ask the operator which plan to execute. A plan is any file produced by `/project-plan` (convention: `.agents/projects/{name}.plan.md`) or equivalent content in conversation. If the operator provides only an outcome, suggest running `/project-spec` then `/project-plan` first.
-2. **Review flags unresolved.** If the plan contains `⚠️ **REVIEW**` markers, halt and inform the operator. Execution must not proceed past unresolved review flags — they represent decisions the operator must make before work begins.
+2. **Review flags or open questions unresolved.** If the plan contains `⚠️ **RF***` markers or open questions (`**Q***`) without recommended answers, halt and inform the operator.
 3. **Plan file not found.** If the referenced plan file does not exist, halt and ask the operator to confirm the path.
 
 ## Determine scope
@@ -31,9 +31,9 @@ For each task within the scoped phase(s):
 
 ## Plan updates
 
-- **Check off acceptance criteria** as each is verified. Keep the plan file current.
-- **Add revision log entries** only when the plan changes: phase added/removed, task scope changed, files renamed, or an execution-time decision made. Format: `YYYY-MM-DD: what changed and why`. Do not add entries for routine check-offs.
-- **Mark a phase complete** by checking all its acceptance criteria. Do not remove content from the plan — if something is superseded, strike through rather than delete.
+- **Update phase status** as work progresses: `► In progress` when starting a phase, `✓ Complete` when all acceptance criteria pass. Keep the plan file current.
+- **Check off acceptance criteria** as each is verified (`[x]`).
+- **Add revision log entries** only for material changes that alter the plan's intent, scope, or structure — phase added/removed, task scope changed, files renamed, or an execution-time decision made. Format: `YYYY-MM-DD: what changed and why`. Do not log check-offs, phase completions, or routine progress.
 - **Preserve the revision log.** It is an append-only record. Never truncate or rewrite past entries.
 
 ## Decisions and surprises

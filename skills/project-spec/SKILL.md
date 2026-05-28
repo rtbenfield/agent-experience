@@ -3,7 +3,7 @@ name: project-spec
 description: Use when the operator provides an outcome-focused prompt, asks for a spec or specification, or says "project-spec" or "/project-spec".
 metadata:
   author: Tyler Benfield
-  version: "2026.5.21"
+  version: "2026.5.28"
 ---
 
 # Project Spec
@@ -17,10 +17,12 @@ If the repository has an established location for specs or plans, use it. Otherw
 ## Workflow
 
 1. **Parse the prompt** — identify the desired outcome, stakeholders, and domain context.
-2. **Research the codebase** — scan for existing patterns, constraints, and conventions that shape the problem space. Check `.agents/projects/` for existing specs that overlap.
+2. **Research** — build understanding from both internal and external sources.
+   - **Codebase**: scan for existing patterns, constraints, and conventions that shape the problem space. Check `.agents/projects/` for existing specs that overlap.
+   - **External**: briefly check whether external sources add value. Skip if the domain is well-understood and codebase exploration already provided sufficient context. Look up authoritative information from external sources — prefer official docs, RFCs, and established references over informal sources. Validate assumptions, discover non-obvious constraints, and challenge the operator's framing.
 3. **Draft the spec** — use the section structure below. Write for a product manager audience: behavioral outcomes, not technical design.
 4. **Assume over ask** — when context allows a reasonable assumption, make it and document it. Reserve open questions for genuine ambiguity where multiple valid paths exist. If you must ask, include a recommended answer.
-5. **Flag blockers** — mark sections that must be resolved before planning can proceed (see Review flags).
+5. **Flag for review** — mark decisions that need operator verification before planning can proceed (see Review flags).
 6. **Present next steps** — after writing the spec, briefly tell the operator what to review and how to proceed. Do not dump the entire spec contents back into the conversation.
 
 ## Spec section structure
@@ -51,13 +53,13 @@ What we are explicitly not doing. Prevents scope creep.
 
 ### Open questions
 
-Decisions that need operator input before planning can proceed. Each must include a recommended answer with rationale.
+Decisions that need operator input before planning can proceed. Number as **Q1**, **Q2**, etc. Each includes the question and a recommended answer with rationale as a sub-bullet.
 
 ## Review flags
 
-Mark items that need operator input before planning can proceed with `> ⚠️ **REVIEW**: <description>` in the relevant section. The `project-plan` skill will halt if unresolved reviews remain in the spec.
+Mark decisions that need operator verification with `⚠️ **RF1** (<description>)` inline in the section where the issue arises — a flag on an assumption goes in Assumptions, a flag on FR3 goes in Functional requirements. Number sequentially across the document (**RF1**, **RF2**, etc.). Unresolved RF markers block downstream workflows.
 
-Use review flags sparingly — only when planning cannot proceed without operator input. Most ambiguities should be resolved via assumptions in the Assumptions section.
+Use when context supports a direction but verification is warranted — "I went with X, confirm this." For genuine ambiguity where multiple valid paths exist, use open questions. Use sparingly; most uncertainties should be resolved via assumptions in the Assumptions section.
 
 ## Rules
 
@@ -66,4 +68,7 @@ Use review flags sparingly — only when planning cannot proceed without operato
 - **Technical outcomes are acceptable** for technical domains (e.g., "cache hit rate ≥ 95%"), but implementation is not (e.g., "use Redis with LRU eviction")
 - **Use requirement labels for cross-references.** Refer to FR1, NFR3 rather than re-stating the requirement. This keeps discussion concise and unambiguous.
 - **Assume over ask.** Document assumptions rather than querying the operator for answers that context can provide. Reserve open questions for genuine ambiguity.
-- **Check existing projects** in `.agents/projects/` before drafting to avoid duplication
+- **Research before assuming.** Verify assumptions with a search before committing them — not guessing from convenience.
+- **Challenge the framing.** If research reveals a flawed premise or suboptimal approach, say so and propose the alternative — not validate the prompt as-given.
+- **Remove resolved markers.** When a review flag or open question is resolved, remove the marker entirely and capture the answer in the relevant section (Assumptions, Functional requirements, etc.) — not leave a resolved marker in place.
+- **Check existing projects** in `.agents/projects/` before drafting to avoid duplication.
