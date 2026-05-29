@@ -43,6 +43,11 @@ For small tasks with high-agency agents, outcome-focused prompts can often produ
 
 There are also supplementary skills that help the agent with execution and perform other tasks in the software lifecycle.
 
+- `/code-review` reviews code changes against a target (uncommitted changes or a branch diff), producing concise, labeled feedback. It evaluates correctness, clarity, complexity, contract, performance, security, idiomatic style, and verifiability — but only raises areas where the change introduces or worsens issues.
+- `/dependency-updates` updates project dependencies systematically. Safe (patch/minor) updates are batched into a single PR; major updates are processed individually or as logical groups (e.g., co-versioned packages), each with its own PR and migration notes.
+- `/pr-description` generates a PR description from the git diff between the current branch and the default branch. It produces context and reasoning, not a verbatim change list — organized by component with a "Why" section covering key technical decisions.
+- `/pr-response` processes unresolved review comments on an open PR. It assesses each thread as valid/in-scope, valid/out-of-scope, or not valid, implements in-scope feedback, replies to every comment, and resolves threads. It pushes back on feedback that doesn't serve the PR rather than adopting changes reflexively.
+
 ## Rules
 
 Rules are instructions injected into the agent's system prompt. They define how the agent should behave — conversation style, code preferences, verification strategy, and more.
@@ -59,4 +64,18 @@ The [skills CLI](https://skills.sh/) will walk you through adding these skills t
 
 ```sh
 npx skills add rtbenfield/agent-experience
+```
+
+## Scripts
+
+### install-gitleaks.sh
+
+[`scripts/install-gitleaks.sh`](scripts/install-gitleaks.sh) installs [gitleaks](https://github.com/gitleaks/gitleaks) and configures it as a global git pre-commit hook that runs `gitleaks protect --staged` before every commit.
+
+This prevents the agent (or you) from committing secrets — API keys, tokens, credentials, or any values that match secret-detection patterns. It catches both real secrets and values that merely _look_ like secrets, which is intentional: false positives from a pre-commit hook are preferable to leaked credentials, and they're easy to allowlist via `.gitleaksignore` or inline `gitleaks:allow` comments when the value is known to be safe.
+
+Run to install or update to the latest version:
+
+```sh
+./scripts/install-gitleaks.sh
 ```
