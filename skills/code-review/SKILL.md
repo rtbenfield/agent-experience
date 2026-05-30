@@ -3,16 +3,16 @@ name: code-review
 description: Use when the operator says "code-review" or "/code-review", asks to review code, requests a code review, or asks for feedback on changes.
 metadata:
   author: Tyler Benfield
-  version: "2026.5.29"
+  version: "2026.5.30"
 ---
 
 # Code Review
 
-Review code changes against a target, producing concise, labeled feedback. You are a peer reviewer — not a gatekeeper, not a rubber stamp. Apply judgment; say LGTM when the code warrants it.
+Review code changes against a target. Produce concise, labeled feedback. You are a peer reviewer — not a gatekeeper, not a rubber stamp.
 
 ## Pre-conditions — halt if unmet
 
-1. **No changes to review.** Requires either pending uncommitted changes or a branch with commits diverging from a target. If neither exists, halt and inform the operator.
+1. **No changes to review.** Requires pending uncommitted changes or a branch diverging from a target. If neither exists, halt and inform the operator.
 
 ## Target selection
 
@@ -26,7 +26,7 @@ When reviewing pending changes, also check for unstaged files and untracked file
 
 ## Review criteria
 
-Evaluate each changed file against these criteria. Not every criterion applies to every change — apply judgment. A refactoring may not raise correctness concerns; a one-liner may not raise contract concerns. Skip criteria that don't apply rather than forcing commentary.
+Evaluate each changed file against the criteria below. Skip criteria that don't apply rather than forcing commentary.
 
 ### Correctness
 
@@ -111,16 +111,18 @@ Consider:
 
 1. **Determine the target** per the target selection rules above.
 2. **Collect the diff.** For pending changes: `git diff` and `git diff --cached`. For branch comparison: `git diff <target>...HEAD`.
-3. **Review each changed file** against the criteria. Load AGENTS.md rules per-file as you review (see AGENTS.md loading). Read the full file when context is needed — don't review from the diff alone if the change is ambiguous without surrounding code.
-4. **Write the review** to `.agents/reviews/<short-hash>.md` for branch comparisons or `.agents/reviews/pending-<short-hash>.md` for uncommitted changes, where `<short-hash>` is the current HEAD short hash. Create the directory if it doesn't exist. Follow the output format below.
-5. **Confirm in chat** with a one-line summary: the review file path, the number of feedback items (or LGTM), and the most significant theme if applicable.
+3. **Review each changed file** against the criteria. Load AGENTS.md rules per-file as you review. Read the full file when context is needed — don't review from the diff alone if the change is ambiguous without surrounding code.
+4. **If you have feedback items** (at least one F1/F2/...), write the review to `.agents/reviews/<short-hash>.md` for branch comparisons or `.agents/reviews/pending-<short-hash>.md` for uncommitted changes, where `<short-hash>` is the current HEAD short hash. Create the directory if it doesn't exist. Follow the output format below. **If there are no feedback items**, skip the file entirely.
+5. **Confirm in chat** with a one-line summary:
+   - **If feedback items exist**: the review file path, the number of feedback items, and the most significant theme.
+   - **If LGTM**: "LGTM — no concerns found." No file was written.
 
 ## Output format
 
-See `assets/EXAMPLES.md` for sample outputs.
+Examples:
 
 - **Example 1** (`assets/example-1.md`): Branch review with multiple findings. Context: a new `RateLimiter` class in `src/lib/rate-limiter.ts` that tracks requests per window using a fixed-size array, plus a basic test file.
-- **Example 2** (`assets/example-2.md`): Pending changes — LGTM. Context: a small deduplication refactor extracting a `formatISODate` helper in `src/utils/format.ts`, no logic changes.
+- **Example 2** (`assets/example-2.md`): Pending changes with two findings. Context: a new `handleEvent` function in `src/handlers/analytics.ts` that processes analytics events via a switch on event type.
 - **Example 3** (`assets/example-3.md`): Branch review with an existing issue. Context: a new paginated user-list API endpoint in `src/routes/users.ts` that depends on an existing `authenticate` middleware.
 
 ```markdown
@@ -159,8 +161,7 @@ See `assets/EXAMPLES.md` for sample outputs.
 
 ### Summary
 
-<If no feedback items: "LGTM — no concerns found.">
-<Otherwise: concise summary of the most significant themes, not a re-listing of items.>
+Concise summary of the most significant themes, not a re-listing of items.
 ```
 
 ### Labeling
@@ -175,11 +176,9 @@ Do not repeat the same feedback across multiple locations. State it once, listin
 
 ## Constraints
 
-- **Areas of improvement only.** Do not list things the code does well. Positive observations add noise without actionable value. If the code is sound, say LGTM and move on.
+- **Areas of improvement only.** Do not list things the code does well — positive observations add noise without actionable value. No obligation to find issues — do not manufacture feedback to appear thorough. If the code is sound, say LGTM and move on.
 - **Skip formatting.** Indentation, line breaks, spacing, alignment — these belong to the formatter, not the review.
 - **Don't nitpick style that doesn't affect readability.** Prefer the existing approach when it's acceptable. Don't suggest rewrites unless the current approach has a concrete drawback.
-- **No obligation to find issues.** If the code is sound, say LGTM and move on. Do not manufacture feedback to appear thorough.
 - **No premature stop.** If there are genuine concerns, raise all of them. No limit on feedback items.
-- **No repetitive feedback.** Point something out once and note where else it applies. Do not produce one item per file for the same issue.
 - **Repo-relative paths only.** `src/lib.rs`, never absolute paths.
 - **Review the change, not the codebase.** Focus feedback on issues introduced or worsened by the change. Pre-existing issues may be flagged as **existing issues** only when they are genuine bugs or clearly problematic code — the bar is higher than for change-introduced concerns. Style preferences, suboptimal patterns, and minor improvements in existing code are out of scope.
