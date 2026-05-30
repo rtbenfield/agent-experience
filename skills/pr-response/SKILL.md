@@ -3,7 +3,7 @@ name: pr-response
 description: Use when the operator says "pr-response" or "/pr-response", asks to address PR review feedback, or asks to reply to review comments on an open PR.
 metadata:
   author: Tyler Benfield
-  version: "2026.5.21"
+  version: "2026.5.30"
 compatibility: Requires the GitHub CLI (gh) installed and authenticated.
 ---
 

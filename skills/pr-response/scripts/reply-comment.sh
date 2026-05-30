@@ -34,6 +34,6 @@ gh api \
   --exit-status \
   --method POST \
   "repos/${OWNER}/${REPO}/pulls/${NUMBER}/comments/${DATABASE_ID}/replies" \
-  -f body=@"${BODY_FILE}"
+  -F body=@"$BODY_FILE"
 
 rm -f "$BODY_FILE"
