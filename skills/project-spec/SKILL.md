@@ -3,7 +3,7 @@ name: project-spec
 description: Use when the operator provides an outcome-focused prompt, asks for a spec or specification, or says "project-spec" or "/project-spec".
 metadata:
   author: Tyler Benfield
-  version: "2026.5.28"
+  version: "2026.5.31"
 ---
 
 # Project Spec
@@ -29,7 +29,9 @@ If the repository has an established location for specs or plans, use it. Otherw
 
 ### Problem
 
-Why this work matters. What pain or opportunity motivates it.
+- Why this work matters. What pain or opportunity motivates it.
+- Success signal — how you know this change solved the problem.
+- The case against — why might we choose not to do this?
 
 ### Stakeholders
 
@@ -46,6 +48,10 @@ Quality attributes the system must exhibit: performance, reliability, security, 
 ### Assumptions
 
 Assumptions made during spec generation. These carry into planning — if an assumption is wrong, the operator should flag it before proceeding.
+
+### Downstream effects
+
+Second-order consequences. Who is negatively affected — users, teams, system qualities. Apply the maintenance test: how does this change affect the product and your life as a maintainer in 6–12 months?
 
 ### Out of scope
 

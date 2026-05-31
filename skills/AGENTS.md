@@ -18,6 +18,10 @@ Every skill directory must contain a `SKILL.md` with YAML frontmatter.
   - `version` — The version of the skill. Use the current date in `YYYY.M.D` format.
 - `allowed-tools` — space-separated string of pre-approved tools. Too agent-specific; skip.
 
+## Versioning
+
+Set `metadata.version` to the current date when the skill directory changes.
+
 ## Description format
 
 The frontmatter `description` field must contain only "Use when…" trigger phrases describing **when** to activate the skill. No capability summaries. This rule applies to the YAML frontmatter field only — the body will naturally contain capability descriptions as instructions, which is expected and correct.
