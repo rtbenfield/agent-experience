@@ -3,7 +3,7 @@ name: project-spec
 description: Use when the operator provides an outcome-focused prompt, asks for a spec or specification, or says "project-spec" or "/project-spec".
 metadata:
   author: Tyler Benfield
-  version: "2026.5.31"
+  version: "2026.6.3"
 ---
 
 # Project Spec
@@ -39,11 +39,11 @@ Who is affected and what they need from this change. Distinguish primary actors 
 
 ### Functional requirements
 
-What the system must do. Write each as a behavioral outcome with measurable conditions folded in. No implementation detail. Number as **FR1**, **FR2**, etc.
+What the system must do. Write each as a behavioral outcome with measurable conditions folded in. No implementation detail. Number as **FR1**, **FR2**, etc. Include only requirements whose absence would materially change the outcome.
 
 ### Non-functional requirements
 
-Quality attributes the system must exhibit: performance, reliability, security, accessibility, observability. State measurable targets where possible. Number as **NFR1**, **NFR2**, etc.
+Quality attributes the system must exhibit: performance, reliability, security, accessibility, observability. State measurable targets where possible. Number as **NFR1**, **NFR2**, etc. Include only attributes that carry real risk or differentiate the outcome.
 
 ### Assumptions
 
@@ -51,11 +51,11 @@ Assumptions made during spec generation. These carry into planning — if an ass
 
 ### Downstream effects
 
-Second-order consequences. Who is negatively affected — users, teams, system qualities. Apply the maintenance test: how does this change affect the product and your life as a maintainer in 6–12 months?
+Second-order consequences. Who is negatively affected — users, teams, system qualities. Apply the maintenance test: how does this change affect the product and your life as a maintainer in 6–12 months? Include only effects that would influence a decision to proceed or alter the approach.
 
 ### Out of scope
 
-What we are explicitly not doing. Prevents scope creep.
+What we are explicitly not doing. Include only items a reasonable reader might assume are in scope.
 
 ### Open questions
 
@@ -67,10 +67,17 @@ Mark decisions that need operator verification with `⚠️ **RF1** (<descriptio
 
 Use when context supports a direction but verification is warranted — "I went with X, confirm this." For genuine ambiguity where multiple valid paths exist, use open questions. Use sparingly; most uncertainties should be resolved via assumptions in the Assumptions section.
 
+## Examples
+
+- **Example 1** (`assets/example-1.md`): Dark mode toggle with persistence and OS-sync. Demonstrates measurable NFRs, qualitative specificity, and tight out-of-scope.
+- **Example 2** (`assets/example-2.md`): HTTP proxy with CDN caching. Demonstrates quantitative measurement methods, review flags, and open questions with recommendations.
+
 ## Rules
 
 - **Behavior, not mechanism.** "Users can toggle between light and dark themes" — not "Create a useTheme hook with useSyncExternalStore"
-- **Measurable where possible.** "Pages load in under 2s on 3G" — not "Pages should be fast"
+- **Measurable where possible.** "Pages load in under 2s on 3G" — not "Pages should be fast".
+  - **Quantitative** — state the measurement method, tool, or scenario. Unmeasurable requirements are not spec-ready: define the measurement or remove the requirement.
+  - **Qualitative** — ensure compliance is determinable without subjective judgment. Cite a standard, define concrete criteria, or describe structural specifics. Subjective terms ("intuitive", "clean", "user-friendly"): make specific or remove.
 - **Technical outcomes are acceptable** for technical domains (e.g., "cache hit rate ≥ 95%"), but implementation is not (e.g., "use Redis with LRU eviction")
 - **Use requirement labels for cross-references.** Refer to FR1, NFR3 rather than re-stating the requirement. This keeps discussion concise and unambiguous.
 - **Assume over ask.** Document assumptions rather than querying the operator for answers that context can provide. Reserve open questions for genuine ambiguity.

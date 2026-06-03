@@ -3,7 +3,7 @@ name: pr-description
 description: Use when the operator requests a PR description, pull request summary, or commit message for a squash merge, says "pr-description" or "/pr-description", or when opening a pull request as part of task execution.
 metadata:
   author: Tyler Benfield
-  version: "2026.5.21"
+  version: "2026.6.3"
 ---
 
 # PR Description
@@ -19,7 +19,7 @@ Generate a PR description from the git diff between the current branch and the d
 2. **Get the diff**: `git diff <default-branch>...HEAD`
 3. **Analyze changes.** Determine intent, scope, and key technical decisions. Ignore tangential changes (import reorganization, minor refactors) unless they're the focus of the PR.
 4. **Generate description** following the structure below.
-5. **Present** the title and body as separate outputs (see Output format). See `assets/EXAMPLES.md` for sample outputs.
+5. **Present** the title and body as separate outputs (see Output format). See Examples for sample outputs.
 
 ## Structure
 
@@ -73,6 +73,11 @@ Provide two separate outputs:
 ```
 
 **Critical:** Do NOT nest markdown blocks. Provide title and body as two distinct outputs. Always use repo-relative paths.
+
+## Examples
+
+- **Example 1** (`assets/example-1.md`): Single-component change — theme hook and token overrides. Demonstrates concise changes and decision reasoning.
+- **Example 2** (`assets/example-2.md`): Multi-component change — full dark mode implementation. Demonstrates organizing changes by area and explaining cross-cutting decisions.
 
 ## Rules
 

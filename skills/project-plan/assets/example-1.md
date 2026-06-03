@@ -1,14 +1,3 @@
-# Project Plan Examples
-
-## Example 1: Dark mode
-
-### Input
-
-`.agents/projects/dark-mode.spec.md` (produced by `/project-spec`)
-
-### Output (`.agents/projects/dark-mode.plan.md`)
-
-```markdown
 # Plan: Dark Mode
 
 **Spec**: `.agents/projects/dark-mode.spec.md`
@@ -78,4 +67,3 @@
 ---
 
 ## Revision log
-```

@@ -3,7 +3,7 @@ name: project-plan
 description: Use when user says "project plan", "plan the spec", "implementation plan", or wants to turn a spec into phased build steps.
 metadata:
   author: Tyler Benfield
-  version: "2026.5.28"
+  version: "2026.6.3"
 ---
 
 # Project Plan
@@ -56,11 +56,15 @@ Decisions needed during implementation. Number as **Q1**, **Q2**, etc. Each incl
 
 #### Phase 1…N
 
-Each phase includes a **Status** (`☐ Not started`, `► In progress`, `✓ Complete`), goal, requirements, changes, and acceptance criteria (see [EXAMPLES.md](assets/EXAMPLES.md)).
+Each phase includes a **Status** (`☐ Not started`, `► In progress`, `✓ Complete`), goal, requirements, changes, and acceptance criteria (see Examples).
 
 ### Revision log
 
 Append-only record of material changes made during execution. `/project-execute` adds entries — not `/project-plan`. Each entry is a dated bullet: `YYYY-MM-DD: what changed and why`. Only log changes that alter the plan's intent, scope, or structure — not check-offs, phase completions, or routine progress.
+
+## Examples
+
+- **Example 1** (`assets/example-1.md`): Dark mode plan from a spec. Demonstrates phased structure, acceptance criteria, review flags, and open questions.
 
 ## Rules
 
