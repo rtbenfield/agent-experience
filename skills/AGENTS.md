@@ -1,22 +1,24 @@
 # Skill Authoring Rules
 
+> **Published skills.** All skills here are published/portable — consumers install them independently. Treat each as standalone. Reference by outcome or behavior, not skill name (exception: pre-conditions or next-action recommendations).
+
 ## Frontmatter
 
-Every skill directory must contain a `SKILL.md` with YAML frontmatter.
+Every skill directory requires a `SKILL.md` with YAML frontmatter.
 
 **Required fields:**
 
-- `name` — max 64 chars. Lowercase alphanumeric and hyphens only. No leading, trailing, or consecutive hyphens. Must match the parent directory name exactly.
-- `description` — max 1024 chars. **Trigger phrases only**, using "Use when…" syntax. Do not describe what the skill does; the body covers that. The description is purely for activation routing.
+- `name` — max 64 chars. Lowercase alphanumeric and hyphens. No leading, trailing, or consecutive hyphens. Matches parent directory name exactly.
+- `description` — max 1024 chars. **Trigger phrases only**, "Use when…" syntax. Do not describe capability — the body covers that. Description is for activation routing only.
 
 **Optional fields:**
 
-- `license` — short license name, or reference to a bundled license file.
-- `compatibility` — max 500 chars. Environment requirements the agent must know before activation (intended product, system packages, network access, etc.). Omit unless the skill has specific requirements.
+- `license` — short license name or reference to a bundled license file.
+- `compatibility` — max 500 chars. Environment requirements (product, packages, network). Omit unless the skill has specific needs.
 - `metadata` — string key–value map.
-  - `author` — The author of the skill. Use `Tyler Benfield`.
-  - `version` — The version of the skill. Use the current date in `YYYY.M.D` format.
-- `allowed-tools` — space-separated string of pre-approved tools. Too agent-specific; skip.
+  - `author` — Skill author name. Omit if non-attributed.
+  - `version` — Current date in `YYYY.M.D` format.
+- `allowed-tools` — too agent-specific; skip.
 
 ## Versioning
 
@@ -24,7 +26,7 @@ Set `metadata.version` to the current date when the skill directory changes.
 
 ## Description format
 
-The frontmatter `description` field must contain only "Use when…" trigger phrases describing **when** to activate the skill. No capability summaries. This rule applies to the YAML frontmatter field only — the body will naturally contain capability descriptions as instructions, which is expected and correct.
+Frontmatter `description` contains only "Use when…" trigger phrases — **when** to activate, not what the skill does. This restriction applies only to frontmatter. The body describes capability freely.
 
 **Correct:**
 
@@ -40,24 +42,25 @@ description: Generates a project specification from outcome-focused prompts. Use
 
 ## Body
 
-The Markdown body after the frontmatter is the skill's instructions. Write for agent consumption: structure and semantics over prose.
+The body after frontmatter is the skill's instructions. Use structure and semantics over prose. Optimize for AI agent consumption.
 
-- Organize with headings, lists, and tables. Agents reason about section semantics, not just fill in text.
-- Bias toward agency: make reasonable assumptions from context and document them. Ask only when multiple valid paths exist and context is genuinely insufficient. When asking, include a recommended answer with rationale.
-- Cross-reference related skills by `name` so agents can chain workflows.
-- Ephemeral content — markers, open questions, pending items — exists to surface unresolved state. When resolved, remove it entirely and capture the resolution in the relevant section. Do not leave resolved artifacts in place.
-- Write instructions as imperatives — "Capture the answer" not "the answer is captured."
-- When a skill produces artifacts requiring operator review, define inline marker types with non-overlapping semantics. Number markers sequentially (e.g., RF1, Q2) for cross-reference. Each type specifies: what it signals, when to use it, and whether it blocks downstream workflows.
+- Use headings, lists, and tables. Agents reason about section semantics.
+- Bias toward agency. Assume reasonable defaults from context. Ask only when multiple valid paths exist and context is genuinely insufficient. Include a recommended answer with rationale.
+- Minimize cross-references to other skills — do not assume they are installed. Use a skill name only in pre-conditions (routing to a prerequisite) or as a next-action recommendation. Otherwise, reference by outcome or behavior.
+- Never reference tool names. Describe the objective or intent. Skills must be agent-agnostic — any harness produces the same outcome from the same instructions.
+- Ephemeral content (markers, open questions, pending items) surfaces unresolved state. When resolved, remove it entirely and capture resolution in the relevant section. Do not leave resolved artifacts in place.
+- Write as imperatives — "Capture the answer" not "the answer is captured."
+- When a skill produces artifacts requiring operator review, define inline marker types with non-overlapping semantics. Number markers sequentially (e.g., RF1, Q2). Each type specifies: what it signals, when to use it, and whether it blocks downstream workflows.
 
 ## Progressive disclosure
 
-Structure skills for layered loading:
+Structure for layered loading:
 
-1. **Metadata** (~100 tokens) — loaded at startup for skill routing.
-2. **Body** (< 5000 tokens recommended) — loaded on activation.
+1. **Metadata** (~100 tokens) — loaded at startup for routing.
+2. **Body** (< 5000 tokens soft limit) — loaded on activation.
 3. **Resources** — loaded on demand.
 
-Keep `SKILL.md` under 500 lines. Split detailed reference material into separate files.
+Keep `SKILL.md` under 500 lines. Split detailed reference into separate files.
 
 ## Directory structure
 
@@ -69,14 +72,32 @@ skill-name/
 └── assets/           # Optional: templates, static resources
 ```
 
-- `name` must match the directory name.
-- Reference files with relative paths from the skill root, one level deep. No deeply nested reference chains.
-- Scripts must be self-contained or document their dependencies. Include helpful error messages and handle edge cases.
+- `name` matches the directory name.
+- Reference files with relative paths from the skill root. One level deep. No nested reference chains.
+- Scripts must be self-contained or document dependencies. Include helpful error messages. Handle edge cases.
+
+## Paths
+
+Reference files relative to the skill root (`skills/{name}/`). Never reference outside that directory — only that directory is available at install time. No absolute paths.
 
 ## Pre-conditions
 
-If a skill requires prior state (e.g., a spec must exist before planning), define a `Pre-conditions` section that halts activation when unmet. Route the operator to the prerequisite skill by `name`.
+If a skill requires prior state, define a `Pre-conditions` section that halts activation when unmet. Route the operator to the prerequisite skill by name.
 
 ## Validation
 
-Validate skills with `skills-ref validate ./my-skill` before publishing. This checks frontmatter format and naming conventions. If skills-ref is not installed, check manually instead.
+Before finishing, validate:
+
+- `name` matches the directory name.
+- `description` contains only "Use when…" trigger phrases — no capability summaries.
+- `metadata.version` set to current date for new or modified skills.
+- Relative paths reference existing files within the skill directory.
+- No absolute paths.
+- No hardcoded tool names.
+- No hardcoded skill names except in pre-conditions or next-action recommendations.
+
+Check manually against the validation list above.
+
+## Exceptions
+
+- **`skill-author`** — repo-local path and cross-reference rules intentionally contradict the published-skill rules; it teaches both conventions for consumers installing elsewhere.
