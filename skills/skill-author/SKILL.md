@@ -10,11 +10,11 @@ metadata:
 
 Write or update agent skill packages. This skill is opinionated — if project conventions conflict with these recommendations, flag the conflict and ask the operator to decide.
 
-Each skill occupies `skills/{name}/` with a `SKILL.md`.
+Each skill occupies `.agents/skills/{name}/` with a `SKILL.md`.
 
 ## Pre-conditions — halt if unmet
 
-1. **Existing skill directory.** For new skills, verify `skills/{name}/` does not exist. For updates, verify it exists and contains `SKILL.md`.
+1. **Existing skill directory.** For new skills, verify `.agents/skills/{name}/` does not exist. For updates, verify it exists and contains `SKILL.md`.
 2. **Name conflicts.** If the requested name already exists and the intent is creation (not update), halt and ask: did you mean to update the existing skill?
 
 ## Workflow
@@ -26,7 +26,7 @@ Derive from the operator's request. If ambiguous, ask with a recommendation. Nam
 ### 2. Scaffold directory
 
 ```
-skills/{name}/
+.agents/skills/{name}/
 ├── SKILL.md          # Required
 ├── scripts/          # Optional: executable helpers
 ├── references/       # Optional: on-demand docs
@@ -109,6 +109,6 @@ Before finishing, validate the skill:
 
 - **Paths.**
   - **Repo-local skill** — reference files within the same repository using repo-relative paths.
-  - **Published/portable skill** — reference files relative to the skill root directory. Never reference anything outside `skills/{name}/`, as only that directory is available at install time.
+  - **Published/portable skill** — reference files relative to the skill root directory. Never reference anything outside `.agents/skills/{name}/`, as only that directory is available at install time.
   - **Absolute paths** — never allowed.
 - Scripts in `scripts/` must be self-contained or document their dependencies. Include helpful error messages and handle edge cases.
