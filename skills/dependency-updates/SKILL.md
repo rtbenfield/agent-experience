@@ -3,7 +3,7 @@ name: dependency-updates
 description: Use when the operator says "dependency-updates" or "/dependency-updates", asks to update dependencies, upgrade packages, bump deps, or update deps.
 metadata:
   author: Tyler Benfield
-  version: "2026.5.24"
+  version: "2026.8.24"
 ---
 
 # Dependency Updates
@@ -26,8 +26,9 @@ Check for these markers in the project root, in priority order. Halt if no marke
 | `requirements.txt` or `pyproject.toml` (without Poetry/PDM) | pip | [pip.md](references/pip.md) |
 | `go.mod` | Go | [go.md](references/go.md) |
 | `Cargo.toml` | Cargo | [cargo.md](references/cargo.md) |
+| `skills-lock.json` | Skills CLI | [skills.md](references/skills.md) |
 
-Load only the reference file for the detected manager.
+Load only the reference file for the detected manager. `skills-lock.json` may coexist with another marker — in that case, load both references and run the Skills CLI update as its own phase (Phase 3).
 
 ## Determine verification commands
 
@@ -61,6 +62,15 @@ For each dependency or group:
 5. **Deliver.** Commit and open a PR (see [PR conventions](#pr-conventions)).
 
 Repeat for each dependency or group as a separate PR. All PRs may be open concurrently.
+
+### Phase 3: Agent skills update
+
+Runs only when `skills-lock.json` is present. Applies to installed agent skills, not package dependencies.
+
+1. **Detect invocation.** Follow [skills.md](references/skills.md) to determine how the Skills CLI is invoked on this machine.
+2. **Update.** Run `skills update --project`.
+3. **Verify.** Run the verification commands determined above.
+4. **Deliver.** Commit and open a PR (see [PR conventions](#pr-conventions)).
 
 ### PR conventions
 
